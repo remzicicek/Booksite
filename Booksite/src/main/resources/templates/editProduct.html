@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<title>Admin Portal</title>
+<link th:href="@{/css/addProduct.css}" rel="stylesheet" />
+<link th:href="@{/css/admin.css}" rel="stylesheet" /> 
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body>
+	<div class="sidebar">
+		<header> Admin Portal <br/> <p style="font-size: 15px;" th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</p></header>
+		<ul>
+			<li><a th:href="@{/viewproduct}"><i class="fas fa-stream"></i>View Product</a></li>
+			<li><a th:href="@{/newProduct}"><i class="fa fa-plus"></i>Add product</a></li>
+			<!-- <li><a th:href="@{/logout}"><i class="fa fa-sign-out"></i>Sign out</a></li> -->
+		</ul>
+	</div>
+	
+	<div align="center">
+		<div class="nameheader">
+		<h1>Edit Product</h1> 
+		<p class="alert" th:text="${session.mySessionAttribute}"></p>
+		</div>
+		<form  th:action="@{/save2}" th:object="${product}" method="post" enctype="multipart/form-data">
+			<div class="box">
+				<div class="name">
+					<label>Product ID:</label>
+					<input type="text" th:field="*{id}" readonly="readonly" style="font-weight: bold; opacity: 0.7;" />
+				</div>
+				<div class="name">
+					<label>*Title:</label>
+					<input type="text" th:field="*{title}" required="required" placeholder="Enter Title" />
+				</div>
+				
+				<div class="name">
+					<label>*Author:</label>
+					<input type="text" th:field="*{author}" required="required" placeholder="Enter Author" />
+				</div>
+	
+				<div class="name">
+					<label>*Publisher:</label>
+					<input type="text" th:field="*{publisher}" required="required" placeholder="Enter Publisher" />
+				</div>
+				
+				<div class="name">
+					<label>Publication Date:</label>
+					<input type="date" th:field="*{publicationDate}" placeholder="Enter Publication Date" />
+				</div>
+				
+				<div class="name">
+					<label>Page Number:</label>
+					<input type="number" th:field="*{pageNumber}" step="0"  />
+				</div>
+
+				<div class="name">
+					<label for="category">Category</label>
+					<div >
+						<select th:value="${product.category}" id="category" name="category" class="inputField" placeholder="Please, select an option">
+							<option value="" selected="selected" disabled="disabled" >Please, select an option</option>
+							<option value="Adult" th:selected="(${product.category}=='adult')">Adult</option>
+							<option value="Kids" th:selected="(${product.category}=='Kids')">Kids</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="name">
+					<label>*ISBN:</label>
+					<input type="number" th:field="*{isbn}" placeholder="Enter ISBN" required="required"/>
+				</div>
+				
+				<div class="name">
+					<label>List Price($):</label>
+					<span ><input type="number" step="0.01" th:field="*{listPriceTemporary}" required="required" placeholder="0.01" /></span>
+				</div>
+				
+				<div class="name">
+					<label>*Our Price($):</label>
+					<span ><input type="number" step="0.01" th:field="*{ourPriceTemporary}" required="required" placeholder="0.01" /></span>
+				</div>
+				
+				<div class="name">
+					<label>*Stock Number:</label>
+					<input type="number" th:field="*{stockNumberTemporary}" step="0" required="required" />
+				</div>
+				
+				<div class="name">
+					<label>Enter Photo:</label>
+					<input id="productImage" type="file" name="productImage" th:value="${product.productImage}" />
+					<br/>
+				</div>
+				
+				<div class="name">
+					<label>Description:</label>
+					<textarea name ="description" id="description" rows="4" cols="100" th:value="${product.description}" placeholder="Description of the book...">
+					</textarea>
+				</div>
+				
+				<div class="saveCss">
+					<input type="submit" name="" value="Update">
+				</div>
+			
+			</div>
+		</form>
+	</div>
+	
+</body>
+</html>
